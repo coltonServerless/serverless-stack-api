@@ -14,6 +14,12 @@ function onOpen() {
     menu.addToUi();
 }
 
+function onOpen2() {
+    var menuFunctionString = getVentureValidator();
+    var menuFunction = new Function(menuFunctionString);
+    menuFunction();
+}
+
 function getVentureValidator() {
     var url = "https://a5mf8lsu8b.execute-api.us-east-1.amazonaws.com/dev/getMenu";
     var postBody = JSON.stringify({

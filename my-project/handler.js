@@ -1,7 +1,7 @@
 import { helloSecond } from './src/helloSecond';
 import { calculateCumulativeTotal } from './src/calculateCumulativeTotal';
-import { getEventBody, handleError, handleSuccess } from './src/utils';
-import { getGoogleSheetMenuUI } from './src/getGoogleSheetUI';
+import { getEventBody, handleError, handleRawRequest, handleSuccess } from './src/utils';
+import { getGoogleSheetMenuUI, getItems, getCumulativeTotalFunction, getOtherFunc } from './src/getGoogleSheetUI';
 
 export const hello = async (event, context) => {
   return {
@@ -34,7 +34,7 @@ export const hello2 = async (event, context) => {
 };
 
 export const modSpreadsheet = async (event, context) => {
-  try{
+  try {
     console.log('<--------------------------- marker 1 --------------------------->');
     const eventBody = getEventBody(event);
     console.log('<--------------------------- marker 22 --------------------------->');
@@ -54,9 +54,42 @@ export const getGoogleSheetMenu = async (event, context) => {
     const menuResponse = getGoogleSheetMenuUI();
     console.log('menuResponse', menuResponse);
 
-    return handleSuccess(menuResponse);
+    return handleRawRequest(menuResponse);
   } catch(err) {
-    console.log('<--------------------------- the hell did you do --------------------------->');
+    console.error(err);
+    return handleError(err);
+  }
+};
+
+export const getMenuItems = async (event, context) => {
+  try {
+    const menuItems = getItems();
+
+    return handleRawRequest(menuItems);
+  } catch(err) {
+    console.error(err);
+    return handleError(err);
+  }
+};
+
+
+export const getCumulativeTotal = async (event, context) => {
+  try {
+    const cumulativeTotalFunc = getCumulativeTotalFunction();
+
+    return handleRawRequest(cumulativeTotalFunc);
+  } catch(err) {
+    console.error(err);
+    return handleError(err);
+  }
+};
+
+export const getOtherFunction = async (event, context) => {
+  try {
+    const otherFunc = getOtherFunc();
+
+    return handleRawRequest(otherFunc);
+  } catch(err) {
     console.error(err);
     return handleError(err);
   }

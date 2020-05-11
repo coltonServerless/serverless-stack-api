@@ -45,13 +45,6 @@ export async function handleSuccess (response){
     if (error) {
         return handleError(response);
     }
-    if (_.isFunction(response)) {
-        return {
-            statusCode: 200,
-            body: response.toString()
-        };
-    }
-
     const body = JSON.stringify({
         ...response,
     });
@@ -65,3 +58,21 @@ export async function handleSuccess (response){
     console.log('<--------------------------- end success response --------------------------->');
     return toReturn;
 }
+
+export async function handleRawRequest(response) {
+    const error = _.get(response, 'error');
+    // const headers = {
+    //     'content-type': 'application/x-www-form-urlencoded'
+    // };
+    if (error) {
+        return handleError(response);
+    }
+
+    const toReturn = {
+        statusCode: 200,
+        body: response
+        // headers
+    };
+    return toReturn;
+}
+
